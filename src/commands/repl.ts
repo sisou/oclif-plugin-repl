@@ -1,0 +1,66 @@
+import repl, {REPLServer} from 'repl'
+import {Command} from '@oclif/command'
+
+export default class Repl extends Command {
+  static description = 'This command will open a repl session for you to execute your commands'
+
+  static examples = ['$ repl']
+
+  static args = [{name: 'input'}]
+
+  private commands: {id: string; description?: string}[] = []
+
+  async run() {
+    this.log('Entering REPL: type `Ctrl+C` or `.exit` to exit')
+    let server: REPLServer
+    await new Promise(() => {
+      let inUse = false
+      server = repl.start({
+        eval: async message => {
+          const args = message.split(' ').map(arg => arg.replace('\n', ''))
+          try {
+            if (args.length > 0 && args[0].length > 0 && !inUse) {
+              inUse = true
+              if (args[0] === 'repl') {
+                this.log('I heard you liked REPLs, so I put a REPL in a REPL.')
+              } else {
+                await Command.run(args)
+              }
+            }
+          } catch (error) {
+            if (error.code !== 'EEXIT') {
+              this.log(error.message)
+            }
+          }
+          inUse = false
+          server.prompt()
+        },
+        completer: (line: string) => {
+          const plugins = this.config.plugins
+          if (this.commands.length === 0) {
+            this.commands.push({id: '.exit'})
+            plugins.forEach(plugin => {
+              plugin.commands.forEach(commands => {
+                try {
+                  if (commands.hidden) return
+                  this.commands.push({
+                    id: commands.id,
+                    description: commands.description || '',
+                  })
+                } catch (error) { }
+              })
+            })
+          }
+          const result: [string[], string] = [
+            this.commands
+            .filter(command => command.id.startsWith(line))
+            .map(command => command.id),
+            line,
+          ]
+          return result
+        },
+      })
+    })
+    process.exit() // eslint-disable-line unicorn/no-process-exit, no-process-exit
+  }
+}
