@@ -60,6 +60,13 @@ export default class Repl extends Command {
           return result
         },
       })
+      server.on('exit', () => {
+        this.config.runHook('postrun', {
+          // @ts-expect-error this.config.commands falsely typed as Plugin[]
+          Command: this.config.commands.find(command => command.id === this.id)!,
+          argv: this.argv,
+        })
+      })
     })
     process.exit() // eslint-disable-line unicorn/no-process-exit, no-process-exit
   }
