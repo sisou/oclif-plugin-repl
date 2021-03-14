@@ -36,10 +36,9 @@ export default class Repl extends Command {
           server.prompt()
         },
         completer: (line: string) => {
-          const plugins = this.config.plugins
           if (this.commands.length === 0) {
             this.commands.push({id: '.exit'})
-            plugins.forEach(plugin => {
+            this.config.plugins.forEach(plugin => {
               plugin.commands.forEach(commands => {
                 try {
                   if (commands.hidden) return
@@ -53,8 +52,8 @@ export default class Repl extends Command {
           }
           const result: [string[], string] = [
             this.commands
-            .filter(command => command.id.startsWith(line))
-            .map(command => command.id),
+              .filter(command => command.id.startsWith(line))
+              .map(command => command.id),
             line,
           ]
           return result
