@@ -17,14 +17,14 @@ export default class Repl extends Command {
       let inUse = false
       server = repl.start({
         eval: async message => {
-          const args = message.split(' ').map(arg => arg.replace('\n', ''))
+          const [id, ...argv] = message.split(' ').map(arg => arg.replace('\n', ''))
           try {
-            if (args.length > 0 && args[0].length > 0 && !inUse) {
+            if (id && !inUse) {
               inUse = true
-              if (args[0] === 'repl') {
+              if (id === 'repl') {
                 this.log('I heard you liked REPLs, so I put a REPL in a REPL.')
               } else {
-                await Command.run(args)
+                await this.config.runCommand(id, argv)
               }
             }
           } catch (error) {
