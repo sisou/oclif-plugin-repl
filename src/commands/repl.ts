@@ -1,4 +1,5 @@
 import repl, {REPLServer} from 'repl'
+import {join} from 'path'
 import {Command} from '@oclif/command'
 
 export default class Repl extends Command {
@@ -59,6 +60,16 @@ export default class Repl extends Command {
           return result
         },
       })
+
+      if (process.versions.node.split('.')[0] >= '12') {
+        const history_file = join(this.config.cacheDir, '.repl_history')
+        // @ts-expect-error 'setupHistory' is only available from Node v11.10, but v8 is the minimum in package.json
+        server.setupHistory(history_file, (error: Error) => {
+          if (error) this.debug(`Failed to setup REPL history: ${error.message}`)
+          else this.debug(`Initialized REPL history at ${history_file}`)
+        })
+      }
+
       server.on('exit', () => {
         this.config.runHook('postrun', {
           // @ts-expect-error this.config.commands falsely typed as Plugin[]
