@@ -38,5 +38,5 @@ EXAMPLE
   $ repl
 ```
 
-_See code: [src/commands/repl.ts](https://github.com/sisou/oclif-plugin-repl/blob/v0.1.2/src/commands/repl.ts)_
+_See code: [src/commands/repl.ts](https://github.com/sisou/oclif-plugin-repl/blob/v0.2.0/src/commands/repl.ts)_
 <!-- commandsstop -->

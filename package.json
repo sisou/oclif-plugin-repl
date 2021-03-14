@@ -1,7 +1,7 @@
 {
   "name": "@sisou/oclif-plugin-repl",
   "description": "A plugin that allows command interaction through a read-eval-print loop.",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "author": "Sören @sisou",
   "bugs": "https://github.com/sisou/oclif-plugin-repl/issues",
   "dependencies": {
