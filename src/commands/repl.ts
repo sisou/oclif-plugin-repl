@@ -29,7 +29,7 @@ export default class Repl extends Command {
           try {
             if (id && !inUse) {
               inUse = true
-              if (id === 'repl') {
+              if (id === this.id) {
                 this.log('I heard you liked REPLs, so I put a REPL in a REPL.')
               } else {
                 await this.config.runCommand(id, argv)
@@ -87,8 +87,7 @@ export default class Repl extends Command {
 
       server.on('exit', () => {
         this.config.runHook('postrun', {
-          // @ts-expect-error this.config.commands falsely typed as Plugin[]
-          Command: this.config.commands.find(command => command.id === this.id)!,
+          Command: Repl,
           argv: this.argv,
         })
       })
