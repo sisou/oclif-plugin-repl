@@ -1,9 +1,11 @@
-import repl, {REPLServer} from 'repl'
+import repl from 'repl'
 import {join} from 'path'
 import {Command} from '@oclif/command'
 
+import type {REPLServer} from 'repl'
+
 export default class Repl extends Command {
-  static description = 'This command will open a repl session for you to execute your commands'
+  static description = 'Open an interactive REPL session to run commands'
 
   static examples = ['$ repl']
 

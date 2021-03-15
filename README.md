@@ -28,7 +28,7 @@ Then update package.json to include it in your list of oclif plugins.
 
 ## `<your-command> repl [INPUT]`
 
-This command will open a repl session for you to execute your commands
+Open an interactive REPL session to run commands
 
 ```
 USAGE
