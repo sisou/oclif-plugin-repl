@@ -24,19 +24,19 @@ Then update package.json to include it in your list of oclif plugins.
 
 # Commands
 <!-- commands -->
-* [`<your-command> repl [INPUT]`](#your-command-repl-input)
+* [`<your-command> repl`](#your-command-repl)
 
-## `<your-command> repl [INPUT]`
+## `<your-command> repl`
 
 Open an interactive REPL session to run commands
 
 ```
 USAGE
-  $ <your-command> repl [INPUT]
+  $ <your-command> repl
 
 EXAMPLE
   $ repl
 ```
 
-_See code: [src/commands/repl.ts](https://github.com/sisou/oclif-plugin-repl/blob/v0.3.0/src/commands/repl.ts)_
+_See code: [src/commands/repl.ts](https://github.com/sisou/oclif-plugin-repl/blob/v0.3.1/src/commands/repl.ts)_
 <!-- commandsstop -->
