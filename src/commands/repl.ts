@@ -1,6 +1,7 @@
 import repl from 'repl'
 import {join} from 'path'
 import {Command} from '@oclif/command'
+import string2Argv from 'string-argv'
 
 import type {REPLServer} from 'repl'
 
@@ -23,7 +24,7 @@ export default class Repl extends Command {
       let inUse = false
       server = repl.start({
         eval: async message => {
-          const [id, ...argv] = message.split(' ').map(arg => arg.replace('\n', ''))
+          const [id, ...argv] = string2Argv(message)
           try {
             if (id && !inUse) {
               inUse = true
