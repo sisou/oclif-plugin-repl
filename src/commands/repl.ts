@@ -9,8 +9,6 @@ export default class Repl extends Command {
 
   static examples = ['$ repl']
 
-  static args = [{name: 'input'}]
-
   static postRun: ((repl: {
     server: REPLServer,
     setPrompt(prompt: string): void,
