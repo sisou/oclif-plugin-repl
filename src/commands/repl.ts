@@ -1,13 +1,21 @@
 import repl from 'repl'
 import {join} from 'path'
-import {Command} from '@oclif/command'
+import {createReadStream} from 'fs'
+import {Command, flags} from '@oclif/command'
 
 import type {REPLServer} from 'repl'
+import type {Readable} from 'stream'
 
 export default class Repl extends Command {
   static description = 'Open an interactive REPL session to run commands'
 
   static examples = ['$ repl']
+
+  static args = [{
+    name: 'input',
+    description: 'input stream file',
+    parse: (input: string): Readable => createReadStream(input),
+  }]
 
   static postRun: ((repl: {
     server: REPLServer,
@@ -17,11 +25,14 @@ export default class Repl extends Command {
   private commands: {id: string; description?: string}[] = []
 
   async run() {
+    const {args} = this.parse(Repl)
+
     this.log('Entering REPL: type `Ctrl+C` or `.exit` to exit')
     let server: REPLServer
     await new Promise(() => {
       let inUse = false
       server = repl.start({
+        input: args.input as Readable | undefined,
         eval: async message => {
           const [id, ...argv] = message.split(' ').map(arg => arg.replace('\n', ''))
           try {
