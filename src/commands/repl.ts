@@ -11,6 +11,11 @@ export default class Repl extends Command {
 
   static args = [{name: 'input'}]
 
+  static postRun: ((repl: {
+    server: REPLServer,
+    setPrompt(prompt: string): void,
+  }) => any) | undefined
+
   private commands: {id: string; description?: string}[] = []
 
   async run() {
@@ -60,6 +65,14 @@ export default class Repl extends Command {
             line,
           ]
           return result
+        },
+      })
+
+      if (Repl.postRun) Repl.postRun({
+        server,
+        setPrompt(prompt: string): void {
+          server.setPrompt(prompt)
+          server.displayPrompt(true)
         },
       })
 
