@@ -1,6 +1,6 @@
 import repl from 'repl'
 import {join} from 'path'
-import {Command} from '@oclif/command'
+import {Command} from '@oclif/core'
 import string2Argv from 'string-argv'
 
 import type {REPLServer} from 'repl'
@@ -86,6 +86,7 @@ export default class Repl extends Command {
 
       server.on('exit', () => {
         this.config.runHook('postrun', {
+          // @ts-expect-error
           Command: Repl,
           argv: this.argv,
         })
