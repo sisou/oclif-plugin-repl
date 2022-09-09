@@ -34,9 +34,12 @@ Open an interactive REPL session to run commands
 USAGE
   $ <your-command> repl
 
-EXAMPLE
+DESCRIPTION
+  Open an interactive REPL session to run commands
+
+EXAMPLES
   $ repl
 ```
 
-_See code: [src/commands/repl.ts](https://github.com/sisou/oclif-plugin-repl/blob/v0.3.1/src/commands/repl.ts)_
+_See code: [src/commands/repl.ts](https://github.com/sisou/oclif-plugin-repl/blob/v0.4.0/src/commands/repl.ts)_
 <!-- commandsstop -->
